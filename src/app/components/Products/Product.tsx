@@ -1,12 +1,10 @@
 "use client";
+import { api } from "@/service/service-axios";
 import { Box, Button, Flex, Grid, Input, Text } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 import React from "react";
 import Loader from "../Loader";
-import Image from "next/image";
-import Link from "next/link";
-import { api } from "@/service/service-axios";
-import { useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
 
 interface ItemProps {
   id: number;
@@ -16,8 +14,6 @@ interface ItemProps {
 }
 
 const Product: React.FC<ItemProps> = () => {
-  const t = useTranslations("Home.Hero");
-
   const { data: apiData, isFetching } = useQuery({
     queryKey: ["product"],
     queryFn: api,
@@ -52,14 +48,6 @@ const Product: React.FC<ItemProps> = () => {
               <Text textAlign={"center"} fontSize="2xl">
                 Rs:{item.price}
               </Text>
-              <Flex justifyContent={"space-around"}>
-                <Button>
-                  <Link href={"/cart"}>{t("Cart")}</Link>
-                </Button>
-                <Link href={`/details/${item.id}`}>
-                  <Button>{t("Details")}</Button>
-                </Link>
-              </Flex>
             </Box>
           ))}
         </Grid>

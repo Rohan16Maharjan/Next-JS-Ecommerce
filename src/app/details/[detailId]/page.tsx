@@ -1,5 +1,5 @@
 "use client";
-import Loader from "@/app/[locale]/components/Loader";
+import Loader from "@/app/components/Loader";
 import { productApi } from "@/service/service-axios";
 import { Box, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
