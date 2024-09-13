@@ -78,9 +78,9 @@ const Product: React.FC<ItemProps> = () => {
                 <Button>
                   <Link href={"/cart"}>Add to Cart</Link>
                 </Button>
-                <Link href={`/details/${item.id}`}>
-                  <Button>View Details</Button>
-                </Link>
+                <Button>
+                  <Link href={`/details/${item.id}`}>View Details</Link>
+                </Button>
               </Flex>
             </Box>
           ))}

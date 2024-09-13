@@ -1,9 +1,10 @@
 "use client";
 import Loader from "@/app/components/Loader";
 import { productApi } from "@/service/service-axios";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Button, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import Link from "next/link";
 
 interface ParamsProps {
   params: {
@@ -30,6 +31,12 @@ const Details: React.FC<ParamsProps> = ({ params }) => {
           />
           <Text>{data.title}</Text>
           <Text>{data.price}</Text>
+          <Button>
+            <Link href={"/cart"}>Add to Cart</Link>
+          </Button>
+          <Button>
+            {/* <Link href={`/details/${item.id}`}>View Details</Link> */}
+          </Button>
         </>
       ) : (
         <Loader />
