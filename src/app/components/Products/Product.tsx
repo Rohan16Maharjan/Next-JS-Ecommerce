@@ -5,7 +5,10 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import { Toaster } from "react-hot-toast";
 import Loader from "../Loader";
+import { toastSuccess } from "@/service/service-toast";
+import Category from "../Category/index";
 
 interface ItemProps {
   id: number;
@@ -39,6 +42,8 @@ const Product: React.FC<ItemProps> = () => {
     }
   };
 
+  const notify = () => toastSuccess("Added to Cart !!");
+
   return (
     <Box>
       <Flex my={2}>
@@ -57,6 +62,7 @@ const Product: React.FC<ItemProps> = () => {
           Search
         </Button>
       </Flex>
+      <Category />
       <Box>
         <Grid templateColumns={"repeat(3,1fr)"} gap={5}>
           {(filterData.length > 0 ? filterData : apiData)?.map((item) => (
@@ -75,8 +81,10 @@ const Product: React.FC<ItemProps> = () => {
                 Rs:{item.price}
               </Text>
               <Flex justifyContent={"space-around"}>
-                <Button>
-                  <Link href={"/cart"}>Add to Cart</Link>
+                <Button onClick={notify}>
+                  <Toaster />
+                  {/* <Link href={"/cart"}>Add to Cart</Link> */}
+                  Add to Cart
                 </Button>
                 <Button>
                   <Link href={`/details/${item.id}`}>View Details</Link>

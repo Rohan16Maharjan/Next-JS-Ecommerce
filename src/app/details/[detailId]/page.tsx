@@ -1,10 +1,12 @@
 "use client";
 import Loader from "@/app/components/Loader";
 import { productApi } from "@/service/service-axios";
-import { Box, Button, Text } from "@chakra-ui/react";
+import { toastSuccess } from "@/service/service-toast";
+import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import Link from "next/link";
+import { Toaster } from "react-hot-toast";
+import { format } from "date-fns";
 
 interface ParamsProps {
   params: {
@@ -12,36 +14,58 @@ interface ParamsProps {
   };
 }
 
-const Details: React.FC<ParamsProps> = ({ params }) => {
+const Details = ({ params }: ParamsProps) => {
   const { data } = useQuery({
     queryKey: ["pro", params.detailId],
     queryFn: () => productApi(params.detailId),
   });
 
+  const notify = () => toastSuccess("Added to Cart !!");
+
   return (
-    <Box>
-      {data?.thumbnail ? (
-        <>
-          <Image
-            src={data.thumbnail}
-            width={250}
-            height={250}
-            priority
-            alt="detailImage"
-          />
-          <Text>{data.title}</Text>
-          <Text>{data.price}</Text>
-          <Button>
-            <Link href={"/cart"}>Add to Cart</Link>
-          </Button>
-          <Button>
-            {/* <Link href={`/details/${item.id}`}>View Details</Link> */}
-          </Button>
-        </>
-      ) : (
-        <Loader />
-      )}
-    </Box>
+    <Flex direction={"column"} gap={5}>
+      <Box>
+        {data?.thumbnail ? (
+          <>
+            <Image
+              src={data.thumbnail}
+              width={250}
+              height={250}
+              priority
+              alt="detailImage"
+            />
+            <Text>{data.title}</Text>
+            <Text>{data.price}</Text>
+            <Text>Brand: {data.brand}</Text>
+
+            <Button onClick={notify}>
+              <Toaster />
+              {/* <Link href={"/cart"}>Add to Cart</Link> */}
+              Add to Cart
+            </Button>
+
+            <Text>{data?.returnPolicy}</Text>
+          </>
+        ) : (
+          <Loader />
+        )}
+      </Box>
+      <Box>
+        <Heading as="h4">Customer FeedBack</Heading>
+        <Flex my={5} gap={5}>
+          {data?.reviews.map((item) => (
+            <Box p={5} border="1px" key={item.comment}>
+              <Heading as="h4" size="md">
+                {item?.reviewerName}
+              </Heading>
+              <Text>Rating:{item?.rating}</Text>
+              <Text>Comment: {item?.comment}</Text>
+              <Text>Date: {format(`${item?.date}`, "yyyy/MM/dd")}</Text>
+            </Box>
+          ))}
+        </Flex>
+      </Box>
+    </Flex>
   );
 };
 

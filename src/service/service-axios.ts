@@ -5,6 +5,18 @@ interface Product {
   title: string;
   price: number;
   thumbnail: string;
+  returnPolicy: string;
+  brand: string;
+  reviews: {
+    rating: number;
+    comment: string;
+    date: string;
+    reviewerName: string;
+  }[];
+}
+
+interface Category {
+  name: string;
 }
 
 type productId = number;
@@ -26,6 +38,18 @@ export const productApi = async (id: productId): Promise<Product> => {
       `https://dummyjson.com/products/${id}`
     );
     return resp.data;
+  } catch (error) {
+    console.error("Error fetching products", error);
+    throw error;
+  }
+};
+
+export const getAllCategory = async (): Promise<Category[]> => {
+  try {
+    const response = await axios.get(
+      "https://dummyjson.com/products/categories"
+    );
+    return response.data;
   } catch (error) {
     console.error("Error fetching products", error);
     throw error;
