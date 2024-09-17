@@ -17,7 +17,7 @@ interface Product {
 
 interface Category {
 	name: string;
-	slugType: string;
+	slug: string;
 }
 
 type productId = number;
@@ -59,12 +59,12 @@ export const getAllCategory = async (): Promise<Category[]> => {
 	}
 };
 
-export const getAllCategoryApi = async (slug: slugName): Promise<Category> => {
+export const getAllCategoryApi = async (slug: slugName): Promise<Product[]> => {
 	try {
-		const response = await axios.get<Category>(
-			`https://dummyjson.com/products/${slug}`
+		const response = await axios.get(
+			`https://dummyjson.com/products/category/${slug}`
 		);
-		return response.data;
+		return response.data.products;
 	} catch (error) {
 		console.error("Error fetching products", error);
 		throw error;

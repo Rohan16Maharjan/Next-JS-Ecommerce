@@ -28,7 +28,7 @@ const Category = () => {
 						alignItems='center'
 						justifyContent='center'
 					>
-						<Link href={`/categories/${item.slugType}`}>
+						<Link href={`/categories/${item.slug}`}>
 							<Text color='white' fontWeight='bold'>
 								{item.name}
 							</Text>
