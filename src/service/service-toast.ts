@@ -1,13 +1,13 @@
-import toast, { Toaster } from "react-hot-toast";
+import toast, { Toaster } from 'react-hot-toast';
 
 const toastSuccess = (message: string) => {
   toast.success(message, {
     id: message,
     style: {
-      border: "1px solid green",
-      padding: "12px",
-      marginTop: "-0.5rem",
-      boxShadow: "none",
+      border: '1px solid green',
+      padding: '12px',
+      marginTop: '-0.5rem',
+      boxShadow: 'none',
     },
   });
 };
@@ -16,8 +16,8 @@ const toastFail = (message: string) => {
   toast.error(message, {
     id: message,
     style: {
-      border: "1px solid red",
-      padding: "12px",
+      border: '1px solid red',
+      padding: '12px',
     },
   });
 };
@@ -32,12 +32,12 @@ const toastPromise = (
   toast.promise(
     promiseAction,
     {
-      loading: loadingMessage ?? "Saving...",
-      success: successMessage ?? "Success!",
-      error: errorMessage ?? "Error!",
+      loading: loadingMessage ?? 'Saving...',
+      success: successMessage ?? 'Success!',
+      error: errorMessage ?? 'Error!',
     },
     {
-      position: "bottom-center",
+      position: 'bottom-center',
       id,
     }
   );

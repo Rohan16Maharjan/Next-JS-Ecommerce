@@ -18,7 +18,7 @@ const Category = () => {
     <Box mb={5}>
       <h1>Categories</h1>
       <SimpleGrid columns={[2, 4, 6, 8]} spacing={5}>
-        {data?.map((item, index) => (
+        {data?.map((item, index: number) => (
           <Link href={`/categories/${item.slug}`} key={index}>
             <Button
               _hover={{
