@@ -1,0 +1,32 @@
+Yarn
+Chakra UI with responsiveness!!
+TS
+React latest one!!
+topics!!
+
+Router
+
+Lazy loading
+
+react query
+
+zustand 
+
+react hook form & Validation with yup
+
+Tanstack Table
+
+Shimmer UI
+
+Testing
+
+different hooks:
+useState
+useEffect (array dependencies: empty, not there, values)
+useContext
+useReducer
+useMemo
+useCallback
+useRef
+
+Khalti

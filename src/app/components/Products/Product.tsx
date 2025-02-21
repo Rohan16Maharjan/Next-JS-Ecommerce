@@ -1,15 +1,15 @@
-"use client";
-import { api } from "@/service/service-axios";
-import { Box, Button, Flex, Grid, Input, Text } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
-import Link from "next/link";
-import React, { useState } from "react";
-import { Toaster } from "react-hot-toast";
-import Loader from "../Loader";
-import { toastSuccess } from "@/service/service-toast";
-import Category from "../Category/Category";
-import Carousal from "../Carousal/Carousal";
+'use client';
+import { api } from '@/service/service-axios';
+import { toastSuccess } from '@/service/service-toast';
+import { Box, Button, Flex, Grid, Input, Text } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import Image from 'next/image';
+import React, { useState } from 'react';
+import Carousal from '../Carousal/Carousal';
+import Category from '../Category/Category';
+import Loader from '../Loader';
+
+import { Center, Heading, Stack, useColorModeValue } from '@chakra-ui/react';
 
 interface ItemProps {
   id: number;
@@ -19,10 +19,10 @@ interface ItemProps {
 }
 
 const Product: React.FC<ItemProps> = () => {
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
   const [filterData, setFilterData] = useState<ItemProps[]>([]);
   const { data: apiData, isFetching } = useQuery({
-    queryKey: ["product"],
+    queryKey: ['product'],
     queryFn: api,
   });
 
@@ -33,7 +33,7 @@ const Product: React.FC<ItemProps> = () => {
   const search = (searchText: string) => {
     if (!apiData) return;
 
-    if (searchText === "") {
+    if (searchText === '') {
       setFilterData(apiData);
     } else {
       const filteredData = apiData?.filter((item) =>
@@ -43,7 +43,7 @@ const Product: React.FC<ItemProps> = () => {
     }
   };
 
-  const notify = () => toastSuccess("Added to Cart !!");
+  const notify = () => toastSuccess('Added to Cart !!');
 
   return (
     <Box>
@@ -66,33 +66,73 @@ const Product: React.FC<ItemProps> = () => {
       <Carousal />
       <Category />
       <Box>
-        <Grid templateColumns={"repeat(3,1fr)"} gap={5}>
+        <Grid templateColumns={'repeat(3,1fr)'} gap={5}>
           {(filterData.length > 0 ? filterData : apiData)?.map((item) => (
-            <Box border={"2px"} borderColor={"gray.200"} key={item.id} p={5}>
-              <Image
-                style={{ padding: "20%" }}
-                src={item.thumbnail}
-                alt="products"
-                width={350}
-                height={350}
-              />
-              <Text textAlign={"center"} fontSize="2xl">
-                {item.title}
-              </Text>
-              <Text textAlign={"center"} fontSize="2xl">
-                Rs:{item.price}
-              </Text>
-              <Flex justifyContent={"space-around"}>
-                <Button onClick={notify}>
-                  <Toaster />
-                  {/* <Link href={"/cart"}>Add to Cart</Link> */}
-                  Add to Cart
-                </Button>
-                <Button>
-                  <Link href={`/details/${item.id}`}>View Details</Link>
-                </Button>
-              </Flex>
-            </Box>
+            <Center key={item.id} py={12}>
+              <Box
+                role={'group'}
+                p={6}
+                maxW={'330px'}
+                w={'full'}
+                boxShadow={'2xl'}
+                rounded={'lg'}
+                pos={'relative'}
+                zIndex={1}
+              >
+                <Box
+                  rounded={'lg'}
+                  mt={-12}
+                  pos={'relative'}
+                  height={'230px'}
+                  _after={{
+                    transition: 'all .3s ease',
+                    content: '""',
+                    w: 'full',
+                    h: 'full',
+                    pos: 'absolute',
+                    top: 5,
+                    left: 0,
+                    filter: 'blur(15px)',
+                    zIndex: -1,
+                  }}
+                  _groupHover={{
+                    _after: {
+                      filter: 'blur(20px)',
+                    },
+                  }}
+                >
+                  <Image
+                    height={230}
+                    width={282}
+                    objectFit={'cover'}
+                    src={item.thumbnail}
+                    alt="#"
+                  />
+                </Box>
+                <Stack pt={10} align={'center'}>
+                  <Text
+                    color={'gray.500'}
+                    fontSize={'sm'}
+                    textTransform={'uppercase'}
+                  >
+                    {item.brand}
+                  </Text>
+                  <Heading
+                    fontSize={'2xl'}
+                    fontFamily={'body'}
+                    fontWeight={500}
+                  >
+                    {item.title}
+                  </Heading>
+                  <Stack direction={'row'} align={'center'}>
+                    <Text fontWeight={500} fontSize={'xl'}>
+                      Rs.{item.price}
+                    </Text>
+                    <Text color={'gray.600'}>-{item.discountPercentage}%</Text>
+                  </Stack>
+                </Stack>
+              </Box>
+            </Center>
           ))}
         </Grid>
       </Box>
